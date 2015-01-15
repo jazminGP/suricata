@@ -13,12 +13,13 @@ RUN apt-get dist-upgrade -y
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install packages 
-RUN apt-get install -y supervisor suricata oinkmaster
+RUN apt-get install -y supervisor suricata
 
 # Setup user, groups and configs
 RUN addgroup --gid 2000 tpot 
 RUN adduser --system --no-create-home --shell /bin/bash --uid 2000 --disabled-password --disabled-login --gid 2000 tpot
-RUN chmod 640 /var/log/suricata/*
+RUN mkdir -p /data/suricata/log/
+RUN chmod 640 /data/suricata/* -R
 
 #RUN chmod 760 -R /data && chown tpot:tpot -R /data
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -27,5 +28,5 @@ ADD suricata.yaml /etc/suricata/suricata.yaml
 # Clean up 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Start dionaea
+# Start suricata
 CMD ["/usr/bin/supervisord"]
