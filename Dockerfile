@@ -1,7 +1,7 @@
 # suricata dockerfile by MO 
 #
-# VERSION 0.1
-FROM ubuntu:14.04.1
+# VERSION 0.11
+FROM ubuntu:14.04.2
 MAINTAINER MO
 
 # Setup apt
