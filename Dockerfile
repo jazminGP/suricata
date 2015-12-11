@@ -1,6 +1,6 @@
 # suricata dockerfile by MO 
 #
-# VERSION 0.12
+# VERSION 16.03.1 
 FROM ubuntu:14.04.3
 MAINTAINER MO
 
@@ -18,10 +18,6 @@ RUN apt-get install -y supervisor suricata
 # Setup user, groups and configs
 RUN addgroup --gid 2000 tpot 
 RUN adduser --system --no-create-home --shell /bin/bash --uid 2000 --disabled-password --disabled-login --gid 2000 tpot
-RUN mkdir -p /data/suricata/log/
-RUN chmod 640 /data/suricata/* -R
-
-#RUN chmod 760 -R /data && chown tpot:tpot -R /data
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD suricata.yaml /etc/suricata/suricata.yaml
 
