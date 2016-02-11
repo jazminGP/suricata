@@ -1,6 +1,6 @@
-# suricata dockerfile by MO 
+# suricata dockerfile by MO
 #
-# VERSION 16.03.2 
+# VERSION 16.03.3
 FROM ubuntu:14.04.3
 MAINTAINER MO
 
@@ -12,8 +12,8 @@ RUN echo "deb http://ppa.launchpad.net/oisf/suricata-stable/ubuntu trusty main" 
     apt-get dist-upgrade -y
 ENV DEBIAN_FRONTEND noninteractive
 
-# Install packages 
-RUN apt-get install -y supervisor suricata
+# Install packages
+RUN apt-get install -y supervisor suricata wget
 
 # Setup user, groups and configs
 RUN addgroup --gid 2000 tpot && \
@@ -21,8 +21,12 @@ RUN addgroup --gid 2000 tpot && \
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD suricata.yaml /etc/suricata/suricata.yaml
 
-# Clean up 
+# Download the latest EmergingThreats ruleset
+RUN wget --no-parent -l1 -r --no-directories -P /etc/suricata/rules/ https://rules.emergingthreats.net/open/suricata/rules/
+
+# Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Start suricata
 CMD ["/usr/bin/supervisord"]
+
