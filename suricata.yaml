@@ -147,7 +147,7 @@ outputs:
             extended: yes     # enable this for extended logging information
             # custom allows additional http fields to be included in eve-log
             # the example below adds three additional fields when uncommented
-            #custom: [Accept-Encoding, Accept-Language, Authorization]
+            custom: [Accept-Encoding, Accept-Language, Authorization]
         - dns
         - tls:
             extended: yes     # enable this for extended logging information
@@ -163,7 +163,7 @@ outputs:
             #  reply-to, bcc, message-id, subject, x-mailer, user-agent, received,
             #  x-originating-ip, in-reply-to, references, importance, priority,
             #  sensitivity, organization, content-md5, date
-            #custom: [received, x-mailer, x-originating-ip, relays, reply-to, bcc]
+            custom: [received, x-mailer, x-originating-ip, relays, reply-to, bcc]
             # output md5 of fields: body, subject
             # for the body you need to set app-layer.protocols.smtp.mime.body-md5
             # to yes
