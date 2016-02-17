@@ -1,7 +1,7 @@
 # suricata dockerfile by MO
 #
-# VERSION 16.03.3
-FROM ubuntu:14.04.3
+# VERSION 16.03.4
+FROM ubuntu:14.04.4
 MAINTAINER MO
 
 # Setup apt
@@ -13,7 +13,11 @@ RUN echo "deb http://ppa.launchpad.net/oisf/suricata-stable/ubuntu trusty main" 
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install packages
-RUN apt-get install -y supervisor suricata wget
+RUN apt-get install -y supervisor suricata wget make gcc libpcap-dev libjansson-dev git && \
+    cd /opt/ && \
+    git clone https://github.com/t3chn0m4g3/p0f -b json-logging && \
+    cd p0f && \
+    ./build.sh
 
 # Setup user, groups and configs
 RUN addgroup --gid 2000 tpot && \
@@ -25,7 +29,9 @@ ADD suricata.yaml /etc/suricata/suricata.yaml
 RUN wget --no-parent -l1 -r --no-directories -P /etc/suricata/rules/ https://rules.emergingthreats.net/open/suricata/rules/
 
 # Clean up
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get remove -y make gcc libpcap-dev libjansson-dev git && \
+    apt-get autoremove -y && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Start suricata
 CMD ["/usr/bin/supervisord"]
