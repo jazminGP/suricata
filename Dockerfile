@@ -1,6 +1,6 @@
 # suricata dockerfile by MO
 #
-# VERSION 16.03.4
+# VERSION 16.03.5
 FROM ubuntu:14.04.4
 MAINTAINER MO
 
@@ -34,5 +34,4 @@ RUN apt-get remove -y make gcc libpcap-dev libjansson-dev git && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Start suricata
-CMD ["/usr/bin/supervisord"]
-
+CMD ["/usr/bin/supervisord","-c","/etc/supervisor/supervisord.conf"]

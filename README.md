@@ -18,3 +18,7 @@ Using upstart, copy the `upstart/suricata.conf` to `/etc/init/suricata.conf` and
     service suricata start
 
 This will make sure that the docker container is started with the appropriate rights and port mappings. Further, it autostarts during boot.
+
+# Suricata Dashboard
+
+![Suricata Dashboard](https://raw.githubusercontent.com/dtag-dev-sec/suricata/master/doc/dashboard.png)
